@@ -1,0 +1,64 @@
+Sesame Rice
+4
+1, shallot
+0, butter
+1, cups rice
+0, soy sauce
+0, toasted sesame oil
+0, sesame seeds
+*
+Swamp Soup
+8
+3, shallot
+1, onion
+4, medium carrots
+0, basil
+0, oregano
+24, ounces tomato sauce
+45, ounces diced tomato
+8, ounces swiss cheese
+2, cups vegetable broth 
+*
+Lemon Artichoke Chicken with Rice
+4
+1, lemon
+1, lbs chicken 
+0, olive oil
+2, shallots
+0, oregano
+0, red pepper
+0, salt
+12, ounces artichoke hearts
+1, cups rice
+2, cups chicken broth
+1, ounces feta
+*
+
+Veggie Barley Soup
+6
+1, onion
+2, shallots
+0, olive oil
+4, medium carrots
+28, ounces diced tomato
+1, cup barley
+6, cups vegetable broth
+1, potato
+2, cups mixed veggies
+0, oregano
+0, black pepper
+0, basil
+*
+Wild Rice and Mushroom Soup
+4
+8, ounces mushrooms
+0, olive oil
+2, shallots
+1, onion
+3, stalks celery
+4, medium carrots
+0, thyme
+0, sage
+2, cups wild rice
+4, cups vegetable broth
+13, ounces coconut milk
