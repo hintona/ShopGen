@@ -6,6 +6,7 @@ package javafxgui;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -46,8 +47,22 @@ public class App extends Application {
             public void handle(ActionEvent event){ primaryStage.close(); }
         });
         
-        TilePane root = new TilePane();
-        root.getChildren().addAll(btn1,btn2,btn3);
+        GridPane root = new GridPane();
+        root.getColumnConstraints().add(new ColumnConstraints(50));
+        root.getColumnConstraints().add(new ColumnConstraints(200));
+        root.getColumnConstraints().add(new ColumnConstraints(200));
+        root.getColumnConstraints().add(new ColumnConstraints(50));
+        root.getRowConstraints().add(new RowConstraints(50));
+        root.getRowConstraints().add(new RowConstraints(50));
+        root.getRowConstraints().add(new RowConstraints(50));
+        root.getRowConstraints().add(new RowConstraints(50));
+
+        root.add(btn1,1,1);
+        root.add(btn2,2,1);
+        root.add(btn3,1,2,2,1);
+        root.setHalignment(btn1, HPos.CENTER);
+        root.setHalignment(btn2, HPos.CENTER);
+        root.setHalignment(btn3, HPos.CENTER);
         primaryStage.setScene(new Scene(root, 500, 200));
         primaryStage.show();
     }
@@ -60,14 +75,25 @@ public class App extends Application {
 
         //take ui for recipe name
         TextField name = new TextField();
+        name.setPromptText("Enter the recipe name");
+        Label forName = new Label("Recipe Name:");
+
 
         //take ui for recipe servings num
         TextField serv = new TextField();
+        serv.setPromptText("Enter the serving size");
+        Label forServ = new Label("Serving Size:");
+
 
         //take ui for ingredients and quantities
         TextArea ing = new TextArea();
         ing.setPrefColumnCount(2);
         ing.setWrapText(false);
+        ing.setPromptText("Enter the ingredients");
+        Label forIng = new Label("Ingredients:\n"+"\nEnter the quantity, followed by a comma,"+
+                " followed by the unit and ingredient. Example: 1, cups rice. "+
+                "For oil and spices, enter no units and 0 as the quantity.");
+        forIng.setWrapText(true);
 
         //save and exit button
         Button exit = new Button();
@@ -90,9 +116,22 @@ public class App extends Application {
                 stage2.close();}
         });
 
-        TilePane root = new TilePane(); //temp while i figure out how to make pretty
-        root.getChildren().addAll(name,serv,ing,exit);
-        stage2.setScene(new Scene(root,500,550));
+        GridPane root = new GridPane();
+        root.getColumnConstraints().add(new ColumnConstraints(50));
+        root.getColumnConstraints().add(new ColumnConstraints(300));
+        root.getColumnConstraints().add(new ColumnConstraints(300));
+        root.getColumnConstraints().add(new ColumnConstraints(50));
+
+        root.add(forName,1,0);
+        root.add(name,2,0);
+        root.add(forServ,1,1);
+        root.add(serv,2,1);
+        root.add(forIng,1,2);
+        root.add(ing,2,2);
+        root.add(exit,1,3,2,1);
+        root.setHalignment(exit, HPos.CENTER);
+
+        stage2.setScene(new Scene(root,700,400));
         stage2.show();
 
     }
