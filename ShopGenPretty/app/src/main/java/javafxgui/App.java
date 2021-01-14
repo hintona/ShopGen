@@ -3,20 +3,22 @@ package javafxgui;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
+import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /*
- * This is the main app menu.
+ * This is the main app menu. Idiot-proof.
  * Additional work needed: Could be made to look more attractive with the use of CSS and/or HTML.
- * Comments needed.
+ * Comments needed. Fix alignment of exit button, with use of 5 columns?
  */
 public class App extends Application {
     public static void main(String[] args) { launch(args); }
@@ -73,7 +75,7 @@ public class App extends Application {
  * This is the menu that allows the user to add in additional recipes to be saved by the app.
  * Additional work needed: Comments should be added to clarify code, and a different method of entering ingredients
  * could be found. Better method of entering the serving size of each recipe could be found, to prevent format errors.
- * Could be made to look more attractive with the use of CSS and/or HTML.
+ * Could be made to look more attractive with the use of CSS and/or HTML. NOT idiot-proof.
  */
     public void addRecipe(){
         Stage stage2 = new Stage();
@@ -169,13 +171,28 @@ public class App extends Application {
         RecipeBook rb = RecipeBook.createBook();
         MealPlan mp = new MealPlan("mp");
 
-        ArrayList bs = new ArrayList();
+        GridPane root = new GridPane();
+        root.setVgap(15);
+        root.getRowConstraints().add(new RowConstraints(30)); //row 0, top buffer
+        root.getColumnConstraints().add(new ColumnConstraints(30));//col 0, left buffer
+        root.getColumnConstraints().add(new ColumnConstraints(200));//col 1, button display
+        root.getColumnConstraints().add(new ColumnConstraints(200));//col 2, button display
+        root.getColumnConstraints().add(new ColumnConstraints(200));//col 3, button display
+        root.getColumnConstraints().add(new ColumnConstraints(200));//col 4, dialogue box slash right buffer
+
+        Rectangle r = new Rectangle(100,10,Color.WHITE); // change to background color
+        System.out.println("this is "+Color.WHITE.isOpaque());
+
+        ArrayList<Button> bs = new ArrayList();
         for(String s : rb.open()){
             Button b = new Button();
             b.setText(s+"("+rb.get(s).getServings()+")");
             b.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
                     mp.addRecipe(rb.get(s));
+                    root.add(r,4,1);
+                    Label test = new Label("This "+mp.getServings());
+                    root.add(test,4,1);
                 //add to whatever display method is chosen
                 }
             });
@@ -205,10 +222,17 @@ public class App extends Application {
             }
         });
 
-        TilePane root = new TilePane(); //temp while i figure out how to make pretty
-        root.getChildren().add(exit);
-        root.getChildren().addAll(bs);
-        stage3.setScene(new Scene(root,500,550));
+
+        for(Button btn : bs){
+            root.add(btn,1+(bs.indexOf(btn)%3),1+(bs.indexOf(btn)/3));
+            root.setHalignment(btn, HPos.CENTER);
+        }
+
+        root.add(exit,0,2+(bs.size()/3),5,1);
+        root.setHalignment(exit,HPos.CENTER);
+
+        stage3.setScene(new Scene(root,830,550)); // width is good, set height to match size
+        // remember 30 buffer and 15 vgap
         stage3.show();
     }
 }
