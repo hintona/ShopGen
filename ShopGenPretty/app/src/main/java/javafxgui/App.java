@@ -26,27 +26,36 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Shopping List Generator");
+        primaryStage.setResizable(false);
 
-        Button btn1 = new Button();
-        btn1.setText("Add Recipe");
-        btn1.setOnAction(new EventHandler<ActionEvent>() {
+        Button rBtn = new Button();
+        rBtn.setText("Add Recipe");
+        rBtn.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 System.out.println("Adding recipe...");
                 addRecipe(); }
         });
 
-        Button btn2 = new Button();
-        btn2.setText("Make Shopping List");
-        btn2.setOnAction(new EventHandler<ActionEvent>() {
+        Button lBtn = new Button();
+        lBtn.setText("Make Shopping List");
+        lBtn.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) { System.out.println("Making new list...");
             try { makeShopList(); }
             catch (IOException e) { e.printStackTrace(); }
             }
         });
 
-        Button btn3 = new Button();
-        btn3.setText("Exit");
-        btn3.setOnAction(new EventHandler<ActionEvent>() {
+        Button sBtn = new Button();
+        sBtn.setText("Settings");
+        sBtn.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event){
+                //openSettings();
+            }
+        });
+
+        Button eBtn = new Button();
+        eBtn.setText("Exit");
+        eBtn.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event){ primaryStage.close(); }
         });
         
@@ -60,12 +69,15 @@ public class App extends Application {
         root.getRowConstraints().add(new RowConstraints(50));
         root.getRowConstraints().add(new RowConstraints(50));
 
-        root.add(btn1,1,1);
-        root.add(btn2,2,1);
-        root.add(btn3,1,2,2,1);
-        root.setHalignment(btn1, HPos.CENTER);
-        root.setHalignment(btn2, HPos.CENTER);
-        root.setHalignment(btn3, HPos.CENTER);
+        root.add(rBtn,1,1);
+        root.add(lBtn,2,1);
+        root.add(sBtn,1,2);
+        root.add(eBtn,2,2);
+
+        root.setHalignment(rBtn, HPos.CENTER);
+        root.setHalignment(lBtn, HPos.CENTER);
+        root.setHalignment(sBtn, HPos.CENTER);
+        root.setHalignment(eBtn, HPos.CENTER);
         primaryStage.setScene(new Scene(root, 500, 200));
         primaryStage.show();
     }
@@ -232,5 +244,15 @@ public class App extends Application {
 
         stage3.setScene(new Scene(root,830,550));
         stage3.show();
+    }
+
+    /*
+     *
+     */
+    public void openSettings(){
+        Stage stage4 = new Stage();
+        stage4.setTitle("Settings");
+
+        stage4.show();
     }
 }
