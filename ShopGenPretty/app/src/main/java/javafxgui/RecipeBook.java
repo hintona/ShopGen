@@ -19,14 +19,9 @@ public class RecipeBook {
         this.pages = new HashMap<>();
     }
 
-    //If a book doesn't already exist, this creates a new one and adds the recipes to it.
-    //By having fillBook be private, we ensure that the user can't mistakenly add the same recipes
-    //twice over.
     public static RecipeBook createBook() throws IOException {
-        if(book == null){
-            book = new RecipeBook();
-            book.fillBook();
-        }
+        book = new RecipeBook();
+        book.fillBook();
         return book;
     }
 
