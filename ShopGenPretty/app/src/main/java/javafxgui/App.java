@@ -180,9 +180,6 @@ public class App extends Application {
         root.getColumnConstraints().add(new ColumnConstraints(200));//col 3, button display
         root.getColumnConstraints().add(new ColumnConstraints(200));//col 4, dialogue box slash right buffer
 
-        Rectangle r = new Rectangle(100,10,Color.WHITE); // change to background color
-        System.out.println("this is "+Color.WHITE.isOpaque());
-
         ArrayList<Button> bs = new ArrayList();
         for(String s : rb.open()){
             Button b = new Button();
@@ -190,15 +187,15 @@ public class App extends Application {
             b.setOnAction(new EventHandler<ActionEvent>() {
                 public void handle(ActionEvent event) {
                     mp.addRecipe(rb.get(s));
-                    root.add(r,4,1);
-                    Label test = new Label("This "+mp.getServings());
-                    root.add(test,4,1);
                 //add to whatever display method is chosen
                 }
             });
             bs.add(b);
         }
+
         //display somewhere the recipes and serving number on list
+        Label display = new Label("This is a placeholder for a potential display panel");
+        display.setWrapText(true);
 
         Button exit = new Button();
         exit.setText("Print & Exit");
@@ -222,6 +219,8 @@ public class App extends Application {
             }
         });
 
+        root.add(display,4,1,1,4);
+        root.setValignment(display,VPos.TOP);
 
         for(Button btn : bs){
             root.add(btn,1+(bs.indexOf(btn)%3),1+(bs.indexOf(btn)/3));
@@ -231,8 +230,7 @@ public class App extends Application {
         root.add(exit,0,2+(bs.size()/3),5,1);
         root.setHalignment(exit,HPos.CENTER);
 
-        stage3.setScene(new Scene(root,830,550)); // width is good, set height to match size
-        // remember 30 buffer and 15 vgap
+        stage3.setScene(new Scene(root,830,550));
         stage3.show();
     }
 }
