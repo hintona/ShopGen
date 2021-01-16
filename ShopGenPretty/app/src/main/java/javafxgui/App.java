@@ -15,10 +15,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import static javafx.scene.text.Font.getFontNames;
+
 /*
- * This is the main app menu. Idiot-proof.
- * Additional work needed: Could be made to look more attractive with the use of CSS and/or HTML.
- * Comments needed. Fix alignment of exit button, with use of 5 columns?
+ * This is the main app menu.
+ * Additional work needed: Comments needed. Fix alignment of exit button, with use of 5 columns?
  */
 public class App extends Application {
     public static void main(String[] args) { launch(args); }
@@ -30,34 +31,29 @@ public class App extends Application {
 
         Button rBtn = new Button();
         rBtn.setText("Add Recipe");
-        rBtn.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                System.out.println("Adding recipe...");
-                addRecipe(); }
+        rBtn.setOnAction(event -> {
+            System.out.println("Adding recipe...");
+            addRecipe();
         });
 
         Button lBtn = new Button();
         lBtn.setText("Make Shopping List");
-        lBtn.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) { System.out.println("Making new list...");
-            try { makeShopList(); }
-            catch (IOException e) { e.printStackTrace(); }
+        lBtn.setOnAction(event -> {
+            System.out.println("Making new list...");
+            try {
+                makeShopList();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
         Button sBtn = new Button();
         sBtn.setText("Settings");
-        sBtn.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event){
-                //openSettings();
-            }
-        });
+        sBtn.setOnAction(event -> openSettings());
 
         Button eBtn = new Button();
         eBtn.setText("Exit");
-        eBtn.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event){ primaryStage.close(); }
-        });
+        eBtn.setOnAction(event -> primaryStage.close());
         
         GridPane root = new GridPane();
         root.getColumnConstraints().add(new ColumnConstraints(50));
@@ -87,7 +83,6 @@ public class App extends Application {
  * This is the menu that allows the user to add in additional recipes to be saved by the app.
  * Additional work needed: Comments should be added to clarify code, and a different method of entering ingredients
  * could be found. Better method of entering the serving size of each recipe could be found, to prevent format errors.
- * Could be made to look more attractive with the use of CSS and/or HTML. NOT idiot-proof.
  */
     public void addRecipe(){
         Stage stage2 = new Stage();
@@ -118,22 +113,21 @@ public class App extends Application {
         //save and exit button
         Button exit = new Button();
         exit.setText("Done");
-        exit.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event){
-                try {
-                    FileWriter input = new FileWriter("recipes.txt",true);
-                    input.write(name.getText()+"\n");
-                    input.write(serv.getText()+"\n");
-                    for(CharSequence line : ing.getParagraphs()){
-                        input.write(line+"\n");
-                    }
-                    input.write("*\n");
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+        exit.setOnAction(event -> {
+            try {
+                FileWriter input = new FileWriter("recipes.txt", true);
+                input.write(name.getText() + "\n");
+                input.write(serv.getText() + "\n");
+                for (CharSequence line : ing.getParagraphs()) {
+                    input.write(line + "\n");
                 }
-                System.out.println("Recipe added!");
-                stage2.close();}
+                input.write("*\n");
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Recipe added!");
+            stage2.close();
         });
 
         GridPane root = new GridPane();
@@ -196,11 +190,9 @@ public class App extends Application {
         for(String s : rb.open()){
             Button b = new Button();
             b.setText(s+"("+rb.get(s).getServings()+")");
-            b.setOnAction(new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent event) {
-                    mp.addRecipe(rb.get(s));
+            b.setOnAction(event -> {
+                mp.addRecipe(rb.get(s));
                 //add to whatever display method is chosen
-                }
             });
             bs.add(b);
         }
@@ -211,24 +203,24 @@ public class App extends Application {
 
         Button exit = new Button();
         exit.setText("Print & Exit");
-        exit.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event){
-                try{
-                    FileWriter output = new FileWriter("ShopList.txt");
-                    output.write(mp.getName()+"\n");
-                    output.write("Meals: ");
-                    for(String s : mp.getMeals()){ output.write(s + ", "); }
-                    output.write("\nServings: "+mp.getServings()+"\n");
-                    for(String key : mp.getShopList().keySet()){
-                        output.write(mp.getShopList().get(key)+key+"\n");}
-                    output.close();
+        exit.setOnAction(event -> {
+            try {
+                FileWriter output = new FileWriter("ShopList.txt");
+                output.write(mp.getName() + "\n");
+                output.write("Meals: ");
+                for (String s : mp.getMeals()) {
+                    output.write(s + ", ");
                 }
-                catch (IOException e){
-                    e.printStackTrace();
+                output.write("\nServings: " + mp.getServings() + "\n");
+                for (String key : mp.getShopList().keySet()) {
+                    output.write(mp.getShopList().get(key) + key + "\n");
                 }
-                stage3.close();
-                System.out.println("Grocery list printed!");
+                output.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            stage3.close();
+            System.out.println("Grocery list printed!");
         });
 
         root.add(display,4,1,1,4);
@@ -247,12 +239,50 @@ public class App extends Application {
     }
 
     /*
-     *
+     * This menu allows the user to change the appearance of the app.
+     * Additional work needed: Comments needed. Menu currently does nothing.
      */
     public void openSettings(){
         Stage stage4 = new Stage();
-        stage4.setTitle("Settings");
+        stage4.setTitle("Settings (Under Construction)");
+        GridPane root = new GridPane();
 
+        Label backgroundL = new Label("Background Color:");
+        Label fontL = new Label("Font Color:");
+        Label fontTL = new Label("Font:");
+
+        ColorPicker backgroundC = new ColorPicker();
+        backgroundC.setOnAction(e -> {
+            Color c = backgroundC.getValue();
+            //change background to c
+        });
+
+        ColorPicker fontC = new ColorPicker();
+        fontC.setOnAction(e -> {
+            Color c = fontC.getValue();
+            //change font to c
+        });
+
+
+        ArrayList<MenuItem> options = new ArrayList<>();
+        //loop to add fonts to options
+        ArrayList<String> fonts = new ArrayList<>(getFontNames());
+        for(String s: fonts){
+            MenuItem m = new MenuItem(s);
+        }
+
+        Menu menu = new Menu();
+        menu.getItems().addAll(options);
+        MenuBar fontT = new MenuBar(menu);
+
+        root.add(backgroundL,1,1);
+        root.add(backgroundC,1,2);
+        root.add(fontL,2,1);
+        root.add(fontC,2,2);
+        root.add(fontTL,3,1);
+        root.add(fontT,3,2);
+
+        stage4.setScene(new Scene(root,550,550));
         stage4.show();
     }
 }
