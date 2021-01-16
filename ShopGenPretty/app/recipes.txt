@@ -62,3 +62,16 @@ Wild Rice and Mushroom Soup
 2, cups wild rice
 4, cups vegetable broth
 13, ounces coconut milk
+*
+Scotch Eggs
+6
+2, lbs ground beef
+1, cups breadcrumbs
+7, eggs
+0, salt
+0, pepper
+0, paprika
+0, sage
+0, fennel seeds
+0, mustard powder
+*
