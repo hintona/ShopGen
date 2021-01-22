@@ -8,8 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,12 +29,32 @@ import static javafx.scene.text.Font.getFontNames;
 public class App extends Application {
     public static void main(String[] args) { launch(args); }
 
+    public Font FONT;  //variable to set font
+    public Color BACKGROUNDCOLOR; //variable to set background colour
+    public Color FONTCOLOR; //variable to set font color
+
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Shopping List Generator");
+    public void start(Stage primaryStage) throws IOException {
+
+        //here set up the initial colour and fonts by reading from the settings file
+        FileReader fr = new FileReader("settings.txt");
+        int i;
+        while((i = fr.read()) != -1){
+            //read into font
+        }
+        while((i = fr.read()) != -1){
+            //read into backgroundcolor
+        }
+        while((i = fr.read()) != -1){
+            //read into fontcolor
+        }
+
+        primaryStage.setTitle("Shopping List Generator"); //font?
         primaryStage.setResizable(false);
 
         Button rBtn = new Button();
+        //rBtn.setFont(FONT);
+        //rBtn.setTextFill(FONTCOLOR);
         rBtn.setText("Add Recipe");
         rBtn.setOnAction(event -> {
             System.out.println("Adding recipe...");
@@ -37,6 +62,8 @@ public class App extends Application {
         });
 
         Button lBtn = new Button();
+        //lBtn.setFont(FONT);
+        //lBtn.setTextFill(FONTCOLOR);
         lBtn.setText("Make Shopping List");
         lBtn.setOnAction(event -> {
             System.out.println("Making new list...");
@@ -48,10 +75,20 @@ public class App extends Application {
         });
 
         Button sBtn = new Button();
+        //sBtn.setFont(FONT);
+        //sBtn.setTextFill(FONTCOLOR);
         sBtn.setText("Settings");
-        sBtn.setOnAction(event -> openSettings());
+        sBtn.setOnAction(event -> {
+            try {
+                openSettings();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         Button eBtn = new Button();
+        //eBtn.setFont(FONT);
+        //eBtn.setTextFill(FONTCOLOR);
         eBtn.setText("Exit");
         eBtn.setOnAction(event -> primaryStage.close());
         
@@ -90,18 +127,21 @@ public class App extends Application {
 
         //take ui for recipe name
         TextField name = new TextField();
+        //name.setFont(FONT);
         name.setPromptText("Enter the recipe name");
         Label forName = new Label("Recipe Name:");
 
 
         //take ui for recipe servings num
         TextField serv = new TextField();
+        //serv.setFont(FONT);
         serv.setPromptText("Enter the serving size");
         Label forServ = new Label("Serving Size:");
 
 
         //take ui for ingredients and quantities
         TextArea ing = new TextArea();
+        //ing.setFont(FONT);
         ing.setPrefColumnCount(2);
         ing.setWrapText(false);
         ing.setPromptText("Enter the ingredients");
@@ -112,6 +152,8 @@ public class App extends Application {
 
         //save and exit button
         Button exit = new Button();
+        //exit.setFont(FONT);
+        //exit.setTextFill(FONTCOLOR);
         exit.setText("Done");
         exit.setOnAction(event -> {
             try {
@@ -189,6 +231,8 @@ public class App extends Application {
         ArrayList<Button> bs = new ArrayList();
         for(String s : rb.open()){
             Button b = new Button();
+            //b.setFont(FONT);
+            //b.setTextFill(FONTCOLOR);
             b.setText(s+"("+rb.get(s).getServings()+")");
             b.setOnAction(event -> {
                 mp.addRecipe(rb.get(s));
@@ -199,9 +243,13 @@ public class App extends Application {
 
         //display somewhere the recipes and serving number on list
         Label display = new Label("This is a placeholder for a potential display panel");
+        //display.setFont(FONT);
+        //display.setTextFill(FONTCOLOR);
         display.setWrapText(true);
 
         Button exit = new Button();
+        //exit.setFont(FONT);
+        //exit.setTextFill(FONTCOLOR);
         exit.setText("Print & Exit");
         exit.setOnAction(event -> {
             try {
@@ -242,14 +290,26 @@ public class App extends Application {
      * This menu allows the user to change the appearance of the app.
      * Additional work needed: Comments needed. Menu currently does nothing.
      */
-    public void openSettings(){
+    public void openSettings() throws IOException {
         Stage stage4 = new Stage();
         stage4.setTitle("Settings (Under Construction)");
         GridPane root = new GridPane();
+        FileWriter fw = new FileWriter("settings.txt");
 
+        Label inst = new Label("Select the colors and font that you want.\n"+
+                "Changes will not take effect until program restarts.\n"+
+                "Must save changes using the Exit button");
+        //inst.setFont(FONT);
+        //inst.setTextFill(FONTCOLOR);
         Label backgroundL = new Label("Background Color:");
+        //backgroundL.setFont(FONT);
+        //backgroundL.setTextFill(FONTCOLOR);
         Label fontL = new Label("Font Color:");
+        //fontL.setFont(FONT);
+        //fontL.setTextFill(FONTCOLOR);
         Label fontTL = new Label("Font:");
+        //fontTL.setFont(FONT);
+        //fontTL.setTextFill(FONTCOLOR);
 
         ColorPicker backgroundC = new ColorPicker();
         backgroundC.setOnAction(e -> {
@@ -275,14 +335,29 @@ public class App extends Application {
         menu.getItems().addAll(options);
         MenuBar fontT = new MenuBar(menu);
 
-        root.add(backgroundL,1,1);
-        root.add(backgroundC,1,2);
-        root.add(fontL,2,1);
-        root.add(fontC,2,2);
-        root.add(fontTL,3,1);
-        root.add(fontT,3,2);
+        Button exit = new Button("Exit");
+        exit.setOnAction(e -> {
+           //save current values to the file, overwriting it
+           stage4.close();
+        });
+        //exit.setFont(FONT);
+        //exit.setTextFill(FONTCOLOR);
 
-        stage4.setScene(new Scene(root,550,550));
+        root.add(inst,1,1,2,1);
+        root.setHalignment(inst,HPos.CENTER);
+        root.add(backgroundL,1,2);
+        root.add(backgroundC,1,3);
+        root.add(fontL,2,2);
+        root.add(fontC,2,3);
+        root.add(fontTL,3,2);
+        root.add(fontT,3,3);
+        root.add(exit,1,4,3,1);
+        root.setHalignment(exit,HPos.CENTER);
+
+        root.setHgap(30);
+        root.setVgap(30);
+
+        stage4.setScene(new Scene(root,500,250));
         stage4.show();
     }
 }
