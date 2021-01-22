@@ -24,19 +24,18 @@ import static javafx.scene.text.Font.getFontNames;
 
 /*
  * This is the main app menu.
- * Additional work needed: Comments needed. Fix alignment of exit button, with use of 5 columns?
+ * Additional work needed: Comments needed.
  */
 public class App extends Application {
     public static void main(String[] args) { launch(args); }
 
-    public Font APPFONT;  //variable to set font
+    public Font APPFONT;
     public Color BACKGROUNDCOLOR; //variable to set background colour
     public Color FONTCOLOR; //variable to set font color
 
     @Override
     public void start(Stage primaryStage) throws IOException {
 
-        //here set up the initial colour and fonts by reading from the settings file
         FileReader fr = new FileReader("settings.txt");
         int i;
         String s = new String();
@@ -53,7 +52,7 @@ public class App extends Application {
             //read into fontcolor
         }
 
-        primaryStage.setTitle("Shopping List Generator"); //font?
+        primaryStage.setTitle("Shopping List Generator");
         primaryStage.setResizable(false);
 
         Button rBtn = new Button();
@@ -339,14 +338,16 @@ public class App extends Application {
 
         Button exit = new Button("Exit");
         exit.setOnAction(e -> {
-           //save current values to the file, overwriting it
             try {
                 fw.write(APPFONT.getName()+"\n");
                 //fw.write(BACKGROUNDCOLOR.toString()+"\n");
                 //fw.write(FONTCOLOR.toString());
+                fw.flush();
+                fw.close();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
+
            stage4.close();
         });
         exit.setFont(APPFONT);
@@ -366,7 +367,7 @@ public class App extends Application {
         root.setHgap(30);
         root.setVgap(30);
 
-        stage4.setScene(new Scene(root,550,250));
+        stage4.setScene(new Scene(root,500,300));
         stage4.show();
     }
 }
