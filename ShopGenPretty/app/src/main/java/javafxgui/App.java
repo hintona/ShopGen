@@ -37,27 +37,35 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
 
         FileReader fr = new FileReader("settings.txt");
-        int i;
+        char c;
         String s = new String();
 
-        while((i = fr.read()) != -1){
-            s = s + (char)i;
+        while((c = (char)fr.read()) != '\n'){
+            s = s + c;
         }
         APPFONT = Font.font(s);
-
-        while((i = fr.read()) != -1){
+/*
+        s = new String();
+        while((c = (char)fr.read()) != '\n'){
             //read into backgroundcolor
         }
-        while((i = fr.read()) != -1){
-            //read into fontcolor
+
+ */
+
+        s = new String();
+
+        while((c = (char)fr.read()) != '\n'){
+            s = s + c;
         }
+        FONTCOLOR = Color.valueOf(s);
+
 
         primaryStage.setTitle("Shopping List Generator");
         primaryStage.setResizable(false);
 
         Button rBtn = new Button();
         rBtn.setFont(APPFONT);
-        //rBtn.setTextFill(FONTCOLOR);
+        rBtn.setTextFill(FONTCOLOR);
         rBtn.setText("Add Recipe");
         rBtn.setOnAction(event -> {
             System.out.println("Adding recipe...");
@@ -66,7 +74,7 @@ public class App extends Application {
 
         Button lBtn = new Button();
         lBtn.setFont(APPFONT);
-        //lBtn.setTextFill(FONTCOLOR);
+        lBtn.setTextFill(FONTCOLOR);
         lBtn.setText("Make Shopping List");
         lBtn.setOnAction(event -> {
             System.out.println("Making new list...");
@@ -79,7 +87,7 @@ public class App extends Application {
 
         Button sBtn = new Button();
         sBtn.setFont(APPFONT);
-        //sBtn.setTextFill(FONTCOLOR);
+        sBtn.setTextFill(FONTCOLOR);
         sBtn.setText("Settings");
         sBtn.setOnAction(event -> {
             try {
@@ -91,7 +99,7 @@ public class App extends Application {
 
         Button eBtn = new Button();
         eBtn.setFont(APPFONT);
-        //eBtn.setTextFill(FONTCOLOR);
+        eBtn.setTextFill(FONTCOLOR);
         eBtn.setText("Exit");
         eBtn.setOnAction(event -> primaryStage.close());
         
@@ -156,7 +164,7 @@ public class App extends Application {
         //save and exit button
         Button exit = new Button();
         exit.setFont(APPFONT);
-        //exit.setTextFill(FONTCOLOR);
+        exit.setTextFill(FONTCOLOR);
         exit.setText("Done");
         exit.setOnAction(event -> {
             try {
@@ -235,7 +243,7 @@ public class App extends Application {
         for(String s : rb.open()){
             Button b = new Button();
             b.setFont(APPFONT);
-            //b.setTextFill(FONTCOLOR);
+            b.setTextFill(FONTCOLOR);
             b.setText(s+"("+rb.get(s).getServings()+")");
             b.setOnAction(event -> {
                 mp.addRecipe(rb.get(s));
@@ -247,12 +255,12 @@ public class App extends Application {
         //display somewhere the recipes and serving number on list
         Label display = new Label("This is a placeholder for a potential display panel");
         display.setFont(APPFONT);
-        //display.setTextFill(FONTCOLOR);
+        display.setTextFill(FONTCOLOR);
         display.setWrapText(true);
 
         Button exit = new Button();
         exit.setFont(APPFONT);
-        //exit.setTextFill(FONTCOLOR);
+        exit.setTextFill(FONTCOLOR);
         exit.setText("Print & Exit");
         exit.setOnAction(event -> {
             try {
@@ -303,16 +311,16 @@ public class App extends Application {
                 "Changes will not take effect until program restarts.\n"+
                 "Must save changes using the Exit button");
         inst.setFont(APPFONT);
-        //inst.setTextFill(FONTCOLOR);
+        inst.setTextFill(FONTCOLOR);
         Label backgroundL = new Label("Background Color:");
         backgroundL.setFont(APPFONT);
-        //backgroundL.setTextFill(FONTCOLOR);
+        backgroundL.setTextFill(FONTCOLOR);
         Label fontL = new Label("Font Color:");
         fontL.setFont(APPFONT);
-        //fontL.setTextFill(FONTCOLOR);
+        fontL.setTextFill(FONTCOLOR);
         Label fontTL = new Label("Font:");
         fontTL.setFont(APPFONT);
-        //fontTL.setTextFill(FONTCOLOR);
+        fontTL.setTextFill(FONTCOLOR);
 
         ColorPicker backgroundC = new ColorPicker();
         backgroundC.setOnAction(e -> BACKGROUNDCOLOR = backgroundC.getValue());
@@ -341,7 +349,8 @@ public class App extends Application {
             try {
                 fw.write(APPFONT.getName()+"\n");
                 //fw.write(BACKGROUNDCOLOR.toString()+"\n");
-                //fw.write(FONTCOLOR.toString());
+                fw.write(FONTCOLOR.toString()+"\n");
+                fw.write("\n"); //here for safety, helps formatting in beginning
                 fw.flush();
                 fw.close();
             } catch (IOException ioException) {
@@ -351,7 +360,7 @@ public class App extends Application {
            stage4.close();
         });
         exit.setFont(APPFONT);
-        //exit.setTextFill(FONTCOLOR);
+        exit.setTextFill(FONTCOLOR);
 
         root.add(inst,1,1,2,1);
         GridPane.setHalignment(inst,HPos.CENTER);
