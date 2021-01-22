@@ -29,7 +29,7 @@ import static javafx.scene.text.Font.getFontNames;
 public class App extends Application {
     public static void main(String[] args) { launch(args); }
 
-    public Font FONT;  //variable to set font
+    public Font APPFONT;  //variable to set font
     public Color BACKGROUNDCOLOR; //variable to set background colour
     public Color FONTCOLOR; //variable to set font color
 
@@ -53,7 +53,7 @@ public class App extends Application {
         primaryStage.setResizable(false);
 
         Button rBtn = new Button();
-        //rBtn.setFont(FONT);
+        //rBtn.setFont(APPFONT);
         //rBtn.setTextFill(FONTCOLOR);
         rBtn.setText("Add Recipe");
         rBtn.setOnAction(event -> {
@@ -62,7 +62,7 @@ public class App extends Application {
         });
 
         Button lBtn = new Button();
-        //lBtn.setFont(FONT);
+        //lBtn.setFont(APPFONT);
         //lBtn.setTextFill(FONTCOLOR);
         lBtn.setText("Make Shopping List");
         lBtn.setOnAction(event -> {
@@ -75,7 +75,7 @@ public class App extends Application {
         });
 
         Button sBtn = new Button();
-        //sBtn.setFont(FONT);
+        //sBtn.setFont(APPFONT);
         //sBtn.setTextFill(FONTCOLOR);
         sBtn.setText("Settings");
         sBtn.setOnAction(event -> {
@@ -87,7 +87,7 @@ public class App extends Application {
         });
 
         Button eBtn = new Button();
-        //eBtn.setFont(FONT);
+        //eBtn.setFont(APPFONT);
         //eBtn.setTextFill(FONTCOLOR);
         eBtn.setText("Exit");
         eBtn.setOnAction(event -> primaryStage.close());
@@ -107,10 +107,10 @@ public class App extends Application {
         root.add(sBtn,1,2);
         root.add(eBtn,2,2);
 
-        root.setHalignment(rBtn, HPos.CENTER);
-        root.setHalignment(lBtn, HPos.CENTER);
-        root.setHalignment(sBtn, HPos.CENTER);
-        root.setHalignment(eBtn, HPos.CENTER);
+        GridPane.setHalignment(rBtn, HPos.CENTER);
+        GridPane.setHalignment(lBtn, HPos.CENTER);
+        GridPane.setHalignment(sBtn, HPos.CENTER);
+        GridPane.setHalignment(eBtn, HPos.CENTER);
         primaryStage.setScene(new Scene(root, 500, 200));
         primaryStage.show();
     }
@@ -127,21 +127,21 @@ public class App extends Application {
 
         //take ui for recipe name
         TextField name = new TextField();
-        //name.setFont(FONT);
+        //name.setFont(APPFONT);
         name.setPromptText("Enter the recipe name");
         Label forName = new Label("Recipe Name:");
 
 
         //take ui for recipe servings num
         TextField serv = new TextField();
-        //serv.setFont(FONT);
+        //serv.setFont(APPFONT);
         serv.setPromptText("Enter the serving size");
         Label forServ = new Label("Serving Size:");
 
 
         //take ui for ingredients and quantities
         TextArea ing = new TextArea();
-        //ing.setFont(FONT);
+        //ing.setFont(APPFONT);
         ing.setPrefColumnCount(2);
         ing.setWrapText(false);
         ing.setPromptText("Enter the ingredients");
@@ -152,7 +152,7 @@ public class App extends Application {
 
         //save and exit button
         Button exit = new Button();
-        //exit.setFont(FONT);
+        //exit.setFont(APPFONT);
         //exit.setTextFill(FONTCOLOR);
         exit.setText("Done");
         exit.setOnAction(event -> {
@@ -188,19 +188,19 @@ public class App extends Application {
         root.getRowConstraints().add(new RowConstraints(50)); //row 5, bottom buffer
 
         root.add(forName,1,1);
-        root.setValignment(forName, VPos.TOP);
+        GridPane.setValignment(forName, VPos.TOP);
         root.add(name,3,1);
-        root.setValignment(name, VPos.TOP);
+        GridPane.setValignment(name, VPos.TOP);
         root.add(forServ,1,2);
-        root.setValignment(forServ, VPos.TOP);
+        GridPane.setValignment(forServ, VPos.TOP);
         root.add(serv,3,2);
-        root.setValignment(serv, VPos.TOP);
+        GridPane.setValignment(serv, VPos.TOP);
         root.add(forIng,1,3);
-        root.setValignment(forIng, VPos.TOP);
+        GridPane.setValignment(forIng, VPos.TOP);
         root.add(ing,3,3);
         root.add(exit,1,4,3,1);
-        root.setHalignment(exit, HPos.CENTER);
-        root.setValignment(exit, VPos.BOTTOM);
+        GridPane.setHalignment(exit, HPos.CENTER);
+        GridPane.setValignment(exit, VPos.BOTTOM);
 
         stage2.setScene(new Scene(root,715,500));
         stage2.show();
@@ -211,7 +211,7 @@ public class App extends Application {
  * This is the menu that allows a use to select their recipes and actually generate the shopping list.
  * Additional work needed: Better formatting for the buttons should be used. A way to display the meals currently
  * added to the meal plan should be included. Could also include a reset button. Comments should be added for
- * clarification. Could be made to look more attractive with CSS and/or HTML.
+ * clarification.
  */
     public void makeShopList() throws IOException {
         Stage stage3 = new Stage();
@@ -228,10 +228,10 @@ public class App extends Application {
         root.getColumnConstraints().add(new ColumnConstraints(200));//col 3, button display
         root.getColumnConstraints().add(new ColumnConstraints(200));//col 4, dialogue box slash right buffer
 
-        ArrayList<Button> bs = new ArrayList();
+        ArrayList<Button> bs = new ArrayList<>();
         for(String s : rb.open()){
             Button b = new Button();
-            //b.setFont(FONT);
+            //b.setFont(APPFONT);
             //b.setTextFill(FONTCOLOR);
             b.setText(s+"("+rb.get(s).getServings()+")");
             b.setOnAction(event -> {
@@ -243,12 +243,12 @@ public class App extends Application {
 
         //display somewhere the recipes and serving number on list
         Label display = new Label("This is a placeholder for a potential display panel");
-        //display.setFont(FONT);
+        //display.setFont(APPFONT);
         //display.setTextFill(FONTCOLOR);
         display.setWrapText(true);
 
         Button exit = new Button();
-        //exit.setFont(FONT);
+        //exit.setFont(APPFONT);
         //exit.setTextFill(FONTCOLOR);
         exit.setText("Print & Exit");
         exit.setOnAction(event -> {
@@ -272,15 +272,15 @@ public class App extends Application {
         });
 
         root.add(display,4,1,1,4);
-        root.setValignment(display,VPos.TOP);
+        GridPane.setValignment(display,VPos.TOP);
 
         for(Button btn : bs){
             root.add(btn,1+(bs.indexOf(btn)%3),1+(bs.indexOf(btn)/3));
-            root.setHalignment(btn, HPos.CENTER);
+            GridPane.setHalignment(btn, HPos.CENTER);
         }
 
         root.add(exit,0,2+(bs.size()/3),5,1);
-        root.setHalignment(exit,HPos.CENTER);
+        GridPane.setHalignment(exit,HPos.CENTER);
 
         stage3.setScene(new Scene(root,830,550));
         stage3.show();
@@ -299,36 +299,34 @@ public class App extends Application {
         Label inst = new Label("Select the colors and font that you want.\n"+
                 "Changes will not take effect until program restarts.\n"+
                 "Must save changes using the Exit button");
-        //inst.setFont(FONT);
+        //inst.setFont(APPFONT);
         //inst.setTextFill(FONTCOLOR);
         Label backgroundL = new Label("Background Color:");
-        //backgroundL.setFont(FONT);
+        //backgroundL.setFont(APPFONT);
         //backgroundL.setTextFill(FONTCOLOR);
         Label fontL = new Label("Font Color:");
-        //fontL.setFont(FONT);
+        //fontL.setFont(APPFONT);
         //fontL.setTextFill(FONTCOLOR);
         Label fontTL = new Label("Font:");
-        //fontTL.setFont(FONT);
+        //fontTL.setFont(APPFONT);
         //fontTL.setTextFill(FONTCOLOR);
 
         ColorPicker backgroundC = new ColorPicker();
-        backgroundC.setOnAction(e -> {
-            Color c = backgroundC.getValue();
-            //change background to c
-        });
+        backgroundC.setOnAction(e -> BACKGROUNDCOLOR = backgroundC.getValue());
 
         ColorPicker fontC = new ColorPicker();
-        fontC.setOnAction(e -> {
-            Color c = fontC.getValue();
-            //change font to c
-        });
+        fontC.setOnAction(e -> FONTCOLOR = fontC.getValue());
 
 
         ArrayList<MenuItem> options = new ArrayList<>();
-        //loop to add fonts to options
         ArrayList<String> fonts = new ArrayList<>(getFontNames());
         for(String s: fonts){
             MenuItem m = new MenuItem(s);
+            m.setText(s);
+            m.setOnAction(event -> {
+                //APPFONT = FONT.font();
+            });
+            options.add(m);
         }
 
         Menu menu = new Menu();
@@ -340,11 +338,11 @@ public class App extends Application {
            //save current values to the file, overwriting it
            stage4.close();
         });
-        //exit.setFont(FONT);
+        //exit.setFont(APPFONT);
         //exit.setTextFill(FONTCOLOR);
 
         root.add(inst,1,1,2,1);
-        root.setHalignment(inst,HPos.CENTER);
+        GridPane.setHalignment(inst,HPos.CENTER);
         root.add(backgroundL,1,2);
         root.add(backgroundC,1,3);
         root.add(fontL,2,2);
@@ -352,12 +350,12 @@ public class App extends Application {
         root.add(fontTL,3,2);
         root.add(fontT,3,3);
         root.add(exit,1,4,3,1);
-        root.setHalignment(exit,HPos.CENTER);
+        GridPane.setHalignment(exit,HPos.CENTER);
 
         root.setHgap(30);
         root.setVgap(30);
 
-        stage4.setScene(new Scene(root,500,250));
+        stage4.setScene(new Scene(root,550,250));
         stage4.show();
     }
 }
