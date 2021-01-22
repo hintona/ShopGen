@@ -39,9 +39,13 @@ public class App extends Application {
         //here set up the initial colour and fonts by reading from the settings file
         FileReader fr = new FileReader("settings.txt");
         int i;
+        String s = new String();
+
         while((i = fr.read()) != -1){
-            //read into font
+            s = s + (char)i;
         }
+        APPFONT = Font.font(s);
+
         while((i = fr.read()) != -1){
             //read into backgroundcolor
         }
@@ -53,7 +57,7 @@ public class App extends Application {
         primaryStage.setResizable(false);
 
         Button rBtn = new Button();
-        //rBtn.setFont(APPFONT);
+        rBtn.setFont(APPFONT);
         //rBtn.setTextFill(FONTCOLOR);
         rBtn.setText("Add Recipe");
         rBtn.setOnAction(event -> {
@@ -62,7 +66,7 @@ public class App extends Application {
         });
 
         Button lBtn = new Button();
-        //lBtn.setFont(APPFONT);
+        lBtn.setFont(APPFONT);
         //lBtn.setTextFill(FONTCOLOR);
         lBtn.setText("Make Shopping List");
         lBtn.setOnAction(event -> {
@@ -75,7 +79,7 @@ public class App extends Application {
         });
 
         Button sBtn = new Button();
-        //sBtn.setFont(APPFONT);
+        sBtn.setFont(APPFONT);
         //sBtn.setTextFill(FONTCOLOR);
         sBtn.setText("Settings");
         sBtn.setOnAction(event -> {
@@ -87,7 +91,7 @@ public class App extends Application {
         });
 
         Button eBtn = new Button();
-        //eBtn.setFont(APPFONT);
+        eBtn.setFont(APPFONT);
         //eBtn.setTextFill(FONTCOLOR);
         eBtn.setText("Exit");
         eBtn.setOnAction(event -> primaryStage.close());
@@ -127,21 +131,21 @@ public class App extends Application {
 
         //take ui for recipe name
         TextField name = new TextField();
-        //name.setFont(APPFONT);
+        name.setFont(APPFONT);
         name.setPromptText("Enter the recipe name");
         Label forName = new Label("Recipe Name:");
 
 
         //take ui for recipe servings num
         TextField serv = new TextField();
-        //serv.setFont(APPFONT);
+        serv.setFont(APPFONT);
         serv.setPromptText("Enter the serving size");
         Label forServ = new Label("Serving Size:");
 
 
         //take ui for ingredients and quantities
         TextArea ing = new TextArea();
-        //ing.setFont(APPFONT);
+        ing.setFont(APPFONT);
         ing.setPrefColumnCount(2);
         ing.setWrapText(false);
         ing.setPromptText("Enter the ingredients");
@@ -152,7 +156,7 @@ public class App extends Application {
 
         //save and exit button
         Button exit = new Button();
-        //exit.setFont(APPFONT);
+        exit.setFont(APPFONT);
         //exit.setTextFill(FONTCOLOR);
         exit.setText("Done");
         exit.setOnAction(event -> {
@@ -231,7 +235,7 @@ public class App extends Application {
         ArrayList<Button> bs = new ArrayList<>();
         for(String s : rb.open()){
             Button b = new Button();
-            //b.setFont(APPFONT);
+            b.setFont(APPFONT);
             //b.setTextFill(FONTCOLOR);
             b.setText(s+"("+rb.get(s).getServings()+")");
             b.setOnAction(event -> {
@@ -243,12 +247,12 @@ public class App extends Application {
 
         //display somewhere the recipes and serving number on list
         Label display = new Label("This is a placeholder for a potential display panel");
-        //display.setFont(APPFONT);
+        display.setFont(APPFONT);
         //display.setTextFill(FONTCOLOR);
         display.setWrapText(true);
 
         Button exit = new Button();
-        //exit.setFont(APPFONT);
+        exit.setFont(APPFONT);
         //exit.setTextFill(FONTCOLOR);
         exit.setText("Print & Exit");
         exit.setOnAction(event -> {
@@ -299,16 +303,16 @@ public class App extends Application {
         Label inst = new Label("Select the colors and font that you want.\n"+
                 "Changes will not take effect until program restarts.\n"+
                 "Must save changes using the Exit button");
-        //inst.setFont(APPFONT);
+        inst.setFont(APPFONT);
         //inst.setTextFill(FONTCOLOR);
         Label backgroundL = new Label("Background Color:");
-        //backgroundL.setFont(APPFONT);
+        backgroundL.setFont(APPFONT);
         //backgroundL.setTextFill(FONTCOLOR);
         Label fontL = new Label("Font Color:");
-        //fontL.setFont(APPFONT);
+        fontL.setFont(APPFONT);
         //fontL.setTextFill(FONTCOLOR);
         Label fontTL = new Label("Font:");
-        //fontTL.setFont(APPFONT);
+        fontTL.setFont(APPFONT);
         //fontTL.setTextFill(FONTCOLOR);
 
         ColorPicker backgroundC = new ColorPicker();
@@ -324,21 +328,28 @@ public class App extends Application {
             MenuItem m = new MenuItem(s);
             m.setText(s);
             m.setOnAction(event -> {
-                //APPFONT = FONT.font();
+                APPFONT = Font.font(s);
             });
             options.add(m);
         }
 
-        Menu menu = new Menu();
+        Menu menu = new Menu("Fonts");
         menu.getItems().addAll(options);
         MenuBar fontT = new MenuBar(menu);
 
         Button exit = new Button("Exit");
         exit.setOnAction(e -> {
            //save current values to the file, overwriting it
+            try {
+                fw.write(APPFONT.getName()+"\n");
+                //fw.write(BACKGROUNDCOLOR.toString()+"\n");
+                //fw.write(FONTCOLOR.toString());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
            stage4.close();
         });
-        //exit.setFont(APPFONT);
+        exit.setFont(APPFONT);
         //exit.setTextFill(FONTCOLOR);
 
         root.add(inst,1,1,2,1);
