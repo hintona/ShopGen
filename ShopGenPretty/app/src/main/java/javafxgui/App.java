@@ -140,6 +140,8 @@ public class App extends Application {
         name.setFont(APPFONT);
         name.setPromptText("Enter the recipe name");
         Label forName = new Label("Recipe Name:");
+        forName.setFont(APPFONT);
+        forName.setTextFill(FONTCOLOR);
 
 
         //take ui for recipe servings num
@@ -147,6 +149,8 @@ public class App extends Application {
         serv.setFont(APPFONT);
         serv.setPromptText("Enter the serving size");
         Label forServ = new Label("Serving Size:");
+        forServ.setFont(APPFONT);
+        forServ.setTextFill(FONTCOLOR);
 
 
         //take ui for ingredients and quantities
@@ -159,6 +163,8 @@ public class App extends Application {
                 " followed by the unit and ingredient. Example: 1, cups rice. "+
                 "For oil and spices, enter no units and 0 as the quantity.");
         forIng.setWrapText(true);
+        forIng.setFont(APPFONT);
+        forIng.setTextFill(FONTCOLOR);
 
         //save and exit button
         Button exit = new Button();
