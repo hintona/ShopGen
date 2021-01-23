@@ -1,4 +1,4 @@
 System Regular
-0xff0000ff
-0x000000ff
+ff00ff
+0xffff00ff
 

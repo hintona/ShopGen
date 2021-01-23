@@ -46,15 +46,11 @@ public class App extends Application {
         }
         APPFONT = Font.font(s);
 
-        StringBuilder st = new StringBuilder();
+        s = new String();
         while((c = (char)fr.read()) != '\n'){
-            st.append(c);
+            s = s+c;
         }
-        //remove first n last two chars
-        st.delete(0,2);
-        st.delete(st.length()-2,st.length());
-        System.out.println(st);
-        BACKGROUNDCOLOR = st.toString();
+        BACKGROUNDCOLOR = s;
 
         s = new String();
         while((c = (char)fr.read()) != '\n'){
@@ -314,7 +310,7 @@ public class App extends Application {
         FileWriter fw = new FileWriter("settings.txt");
 
         Label inst = new Label("Select the colors and font that you want.\n"+
-                "Changes will not take effect until program restarts.\n"+
+                "Changes will not take full effect until program restarts.\n"+
                 "Must save changes using the Exit button");
         inst.setFont(APPFONT);
         inst.setTextFill(FONTCOLOR);
@@ -329,7 +325,12 @@ public class App extends Application {
         fontTL.setTextFill(FONTCOLOR);
 
         ColorPicker backgroundC = new ColorPicker();
-        backgroundC.setOnAction(e -> BACKGROUNDCOLOR = backgroundC.getValue().toString());
+        backgroundC.setOnAction(e -> {
+            StringBuilder st = new StringBuilder(backgroundC.getValue().toString());
+            st.delete(0,2);
+            st.delete(st.length()-2,st.length());
+            BACKGROUNDCOLOR = st.toString();
+        });
 
         ColorPicker fontC = new ColorPicker(Color.BLACK);
         fontC.setOnAction(e -> FONTCOLOR = fontC.getValue());
