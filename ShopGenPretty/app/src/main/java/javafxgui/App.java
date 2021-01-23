@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import static java.lang.String.copyValueOf;
 import static javafx.scene.text.Font.getFontNames;
 
 /*
@@ -30,7 +31,7 @@ public class App extends Application {
     public static void main(String[] args) { launch(args); }
 
     public Font APPFONT;
-    public Color BACKGROUNDCOLOR; //variable to set background colour
+    public String BACKGROUNDCOLOR; //variable to set background colour
     public Color FONTCOLOR; //variable to set font color
 
     @Override
@@ -44,21 +45,22 @@ public class App extends Application {
             s = s + c;
         }
         APPFONT = Font.font(s);
-/*
-        s = new String();
+
+        StringBuilder st = new StringBuilder();
         while((c = (char)fr.read()) != '\n'){
-            //read into backgroundcolor
+            st.append(c);
         }
-
- */
+        //remove first n last two chars
+        st.delete(0,2);
+        st.delete(st.length()-2,st.length());
+        System.out.println(st);
+        BACKGROUNDCOLOR = st.toString();
 
         s = new String();
-
         while((c = (char)fr.read()) != '\n'){
             s = s + c;
         }
         FONTCOLOR = Color.valueOf(s);
-
 
         primaryStage.setTitle("Shopping List Generator");
         primaryStage.setResizable(false);
@@ -104,6 +106,7 @@ public class App extends Application {
         eBtn.setOnAction(event -> primaryStage.close());
         
         GridPane root = new GridPane();
+        root.setStyle("-fx-background-color:#"+BACKGROUNDCOLOR);
         root.getColumnConstraints().add(new ColumnConstraints(50));
         root.getColumnConstraints().add(new ColumnConstraints(200));
         root.getColumnConstraints().add(new ColumnConstraints(200));
@@ -184,6 +187,7 @@ public class App extends Application {
         });
 
         GridPane root = new GridPane();
+        root.setStyle("-fx-background-color:#"+BACKGROUNDCOLOR);
 
         root.getColumnConstraints().add(new ColumnConstraints(50)); //col 0, left buffer
         root.getColumnConstraints().add(new ColumnConstraints(300)); //col 1, label column
@@ -231,6 +235,7 @@ public class App extends Application {
         MealPlan mp = new MealPlan("mp");
 
         GridPane root = new GridPane();
+        root.setStyle("-fx-background-color:#"+BACKGROUNDCOLOR);
         root.setVgap(15);
         root.getRowConstraints().add(new RowConstraints(30)); //row 0, top buffer
         root.getColumnConstraints().add(new ColumnConstraints(30));//col 0, left buffer
@@ -303,8 +308,9 @@ public class App extends Application {
      */
     public void openSettings() throws IOException {
         Stage stage4 = new Stage();
-        stage4.setTitle("Settings (Under Construction)");
+        stage4.setTitle("Settings");
         GridPane root = new GridPane();
+        root.setStyle("-fx-background-color:#"+BACKGROUNDCOLOR);
         FileWriter fw = new FileWriter("settings.txt");
 
         Label inst = new Label("Select the colors and font that you want.\n"+
@@ -323,9 +329,9 @@ public class App extends Application {
         fontTL.setTextFill(FONTCOLOR);
 
         ColorPicker backgroundC = new ColorPicker();
-        backgroundC.setOnAction(e -> BACKGROUNDCOLOR = backgroundC.getValue());
+        backgroundC.setOnAction(e -> BACKGROUNDCOLOR = backgroundC.getValue().toString());
 
-        ColorPicker fontC = new ColorPicker();
+        ColorPicker fontC = new ColorPicker(Color.BLACK);
         fontC.setOnAction(e -> FONTCOLOR = fontC.getValue());
 
 
@@ -348,7 +354,7 @@ public class App extends Application {
         exit.setOnAction(e -> {
             try {
                 fw.write(APPFONT.getName()+"\n");
-                //fw.write(BACKGROUNDCOLOR.toString()+"\n");
+                fw.write(BACKGROUNDCOLOR+"\n");
                 fw.write(FONTCOLOR.toString()+"\n");
                 fw.write("\n"); //here for safety, helps formatting in beginning
                 fw.flush();
