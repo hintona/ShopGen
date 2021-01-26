@@ -254,16 +254,23 @@ public class App extends Application {
             b.setText(s+"("+rb.get(s).getServings()+")");
             b.setOnAction(event -> {
                 mp.addRecipe(rb.get(s));
+                String dis = "Meals:";
+                for(String meal:mp.getMeals()){
+                    dis = dis + "\n" + meal;
+                }
+                Label display = new Label(dis);
+                display.setFont(APPFONT);
+                display.setTextFill(FONTCOLOR);
+                display.setWrapText(true);
+                root.add(display,4,1,1,4);
+                GridPane.setValignment(display,VPos.TOP);
                 //add to whatever display method is chosen
             });
             bs.add(b);
         }
 
         //display somewhere the recipes and serving number on list
-        Label display = new Label("This is a placeholder for a potential display panel");
-        display.setFont(APPFONT);
-        display.setTextFill(FONTCOLOR);
-        display.setWrapText(true);
+
 
         Button exit = new Button();
         exit.setFont(APPFONT);
@@ -288,9 +295,6 @@ public class App extends Application {
             stage3.close();
             System.out.println("Grocery list printed!");
         });
-
-        root.add(display,4,1,1,4);
-        GridPane.setValignment(display,VPos.TOP);
 
         for(Button btn : bs){
             root.add(btn,1+(bs.indexOf(btn)%3),1+(bs.indexOf(btn)/3));
