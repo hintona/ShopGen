@@ -247,6 +247,8 @@ public class App extends Application {
         root.getColumnConstraints().add(new ColumnConstraints(200));//col 4, dialogue box slash right buffer
 
         ArrayList<Button> bs = new ArrayList<>();
+        Label display = new Label();
+
         for(String s : rb.open()){
             Button b = new Button();
             b.setFont(APPFONT);
@@ -254,11 +256,7 @@ public class App extends Application {
             b.setText(s+"("+rb.get(s).getServings()+")");
             b.setOnAction(event -> {
                 mp.addRecipe(rb.get(s));
-                String dis = "Meals:";
-                for(String meal:mp.getMeals()){
-                    dis = dis + "\n" + meal;
-                }
-                Label display = new Label(dis);
+                display.setText("Servings: "+mp.getServings()+"\n"+"Meals: "+mp.getMeals());
                 display.setFont(APPFONT);
                 display.setTextFill(FONTCOLOR);
                 display.setWrapText(true);
@@ -268,8 +266,7 @@ public class App extends Application {
             });
             bs.add(b);
         }
-
-        //display somewhere the recipes and serving number on list
+        //call settext for label after creation
 
 
         Button exit = new Button();
